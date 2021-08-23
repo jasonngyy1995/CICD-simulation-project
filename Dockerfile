@@ -10,4 +10,3 @@ COPY ./app /app
 
 RUN adduser -D user
 USER user
-
