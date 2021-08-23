@@ -15,4 +15,25 @@ class ModeTests(TestCase):
         self.assertEqual(user.email, email)
         self.assertTrue(user.check_password(password))
         
+    def test_email_normalized(self):
+        """test the email for the new user is normalized"""
+        email = 'test@GMAIL.COM'
+        user = get_user_model().objects.create_user(email,'test123')
+
+        self.assertEqual(user.email,email.lower())
+
+    def test_user_invalid_email(self):
+        """Test creating user with no email raises error"""
+        with self.assertRaises(ValueError):
+            get_user_model().objects.create_user(None, 'test123')
+
     
+    def test_creat_superuser(self):
+        """Test creating a new superuser"""
+        user = get_user_model().objects.create_superuser(
+            'test@gmail.com',
+            'test123'
+        )
+
+        self.assertTrue(user.is_superuser)
+        self.assertTrue(user.is_staff)
