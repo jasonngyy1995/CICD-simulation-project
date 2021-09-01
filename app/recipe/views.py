@@ -20,7 +20,7 @@ class Tagview(viewsets.GenericViewSet, mixins.ListModelMixin,mixins.CreateModelM
         serizalizer.save(user=self.request.user)
 
 
-class IngredientView(viewsets.GenericViewSet, mixins.ListModelMixin):
+class IngredientView(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.CreateModelMixin):
     """Ingredient in the database"""
     authentication = (TokenAuthentication,)
     permission = (IsAuthenticated,)
@@ -30,5 +30,9 @@ class IngredientView(viewsets.GenericViewSet, mixins.ListModelMixin):
     def get_queryset(self):
         """return objects for the current user"""
         return self.queryset.filter(user=self.request.user).order_by('_name')
+
+    def ingredient_create(self,serizalizer):
+        """Create a new ingredient"""
+        serizalizer.save(user=self.request.user)
 
 
