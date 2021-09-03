@@ -7,8 +7,8 @@ from rest_framework import status
 Create_user_url = reverse('user:create')
 TOKEN_URL = reverse('user:token')
 
-def create_user(**par):
-    return get_user_model().objects.create_user(**par)
+def create_user(**params):
+    return get_user_model().objects.create_user(**params)
 
 class PublicUserApiTest(TestCase):
     """Test the user api"""
@@ -19,7 +19,7 @@ class PublicUserApiTest(TestCase):
         """testing create user sucessful"""
         payload = {
             'email': 'test@gmail.com',
-            'password':'test',
+            'password':'passtest',
             'name': 'yoyo',
         }
         res = self.client.post(Create_user_url, payload)
@@ -44,7 +44,7 @@ class PublicUserApiTest(TestCase):
         """Test that the password is more than 6 characters"""
         payload = {
             'email': 'test@gmail.com',
-            'password': 'pass',
+            'password': 'passtest',
             'name': 'yoyo',
         }
         res = self.client.post(Create_user_url, payload)
@@ -60,6 +60,7 @@ class PublicUserApiTest(TestCase):
         payload = {'email':'test@gmail.com','password':'testpass'}
         create_user(**payload)
         res = self.client.post(TOKEN_URL,payload)
+        
         self.assertIn('token',res.data)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
 

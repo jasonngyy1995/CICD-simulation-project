@@ -13,7 +13,7 @@ class Tagview(viewsets.GenericViewSet, mixins.ListModelMixin,mixins.CreateModelM
 
     def get_queryset(self):
         """return objects for the current user"""
-        return self.queryset.filter(user=self.request.user).order_by('_name')
+        return self.queryset.filter(user=self.request.user).order_by('-name')
 
     def tag_create(self,serizalizer):
         """Create a new tag"""
@@ -29,7 +29,7 @@ class IngredientView(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.Crea
 
     def get_queryset(self):
         """return objects for the current user"""
-        return self.queryset.filter(user=self.request.user).order_by('_name')
+        return self.queryset.filter(user=self.request.user).order_by('-name')
 
     def ingredient_create(self,serizalizer):
         """Create a new ingredient"""
