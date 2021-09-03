@@ -68,7 +68,8 @@ class PublicUserApiTest(TestCase):
         """If the invalid credential, not create token"""
         create_user(email='test@gmail.com',password='passtest')
         payload = {'email': 'test@gmail.com', 'password': '123'}
-        res = self.client.post(TOKEN_URL,payload)
+        res = self.client.post(TOKEN_URL, payload)
+
         self.assertNotIn('token',res.data)
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
     
@@ -77,12 +78,14 @@ class PublicUserApiTest(TestCase):
         """"If user do no exist, not create token"""
         payload={'email':'test@gmail.com','password':'passtest'}
         res = self.client.post(TOKEN_URL,payload)
+
         self.assertNotIn('token',res.data)
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_token_missing_field(self):
         """The email and password are required"""
         res = self.client.post(TOKEN_URL,{'email':'test','password':''})
+        
         self.assertNotIn('token',res.data) 
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 

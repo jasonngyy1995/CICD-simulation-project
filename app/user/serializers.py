@@ -8,11 +8,11 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
         fields = ('email','password','name')
-        extra_key = {'password':{'write_only':True, 'min_length':6}}
+        extra_key = {'password': {'write_only': True, 'min_length':6}}
 
-    def create(self,data):
+    def create(self,vdata):
         """Create a new user with vaild password and return it"""
-        return get_user_model().objects.create_user(**data)
+        return get_user_model().objects.create_user(**vdata)
         
 class AuthTokenSerializer(serializers.Serializer):
     email = serializers.CharField()
