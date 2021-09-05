@@ -4,7 +4,7 @@ from django.urls import reverse
 from rest_framework.test import APIClient 
 from rest_framework import status
 
-Create_user_url = reverse('user:create')
+CREATE_USER_URL = reverse('user:create')
 TOKEN_URL = reverse('user:token')
 
 def create_user(**params):
@@ -19,10 +19,10 @@ class PublicUserApiTest(TestCase):
         """testing create user sucessful"""
         payload = {
             'email': 'test@gmail.com',
-            'password':'passtest',
-            'name': 'yoyo',
+            'password':'passtest123',
+            'name': 'test',
         }
-        res = self.client.post(Create_user_url, payload)
+        res = self.client.post(CREATE_USER_URL, payload)
 
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
         user = get_user_model().objects.get(**res.data)
@@ -37,17 +37,17 @@ class PublicUserApiTest(TestCase):
             'name': 'yoyo',
         }
         create_user(**payload)
-        res = self.client.post(Create_user_url, payload)
+        res = self.client.post(CREATE_USER_URL, payload)
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_password_quality(self):
         """Test that the password is more than 6 characters"""
         payload = {
             'email': 'test@gmail.com',
-            'password': 'passtest',
+            'password': 'pas',
             'name': 'yoyo',
         }
-        res = self.client.post(Create_user_url, payload)
+        res = self.client.post(CREATE_USER_URL, payload)
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
         user_exists = get_user_model().objects.filter(
             email = payload['email']

@@ -10,13 +10,25 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('email','password','name')
         extra_key = {'password': {'write_only': True, 'min_length':6}}
 
-    def create(self,vdata):
+    def create(self,validated_data):
         """Create a new user with vaild password and return it"""
-        return get_user_model().objects.create_user(**vdata)
+        return get_user_model().objects.create_user(**validated_data)
+
+    def update(self, instance, validated_data):
+        """Update a user,setting the password correctly and return"""
+        password = validated_data.pop('password',None)
+        user = super().update(instance,validated_data)
+        if password:
+            user.set_password(password)
+            user.save()
+        return user
         
 class AuthTokenSerializer(serializers.Serializer):
     email = serializers.CharField()
-    password = serializers.CharField(style = {'input_type':'password'})
+    password = serializers.CharField(
+        style = {'input_type':'password'},
+        trim_whitespace=False
+    )
 
     def validate(self,attributes):
         """validate and authenticate the user"""
@@ -28,8 +40,8 @@ class AuthTokenSerializer(serializers.Serializer):
             password = password
         )
         if not user:
-            message = ('unable to authenticate the user')
-            raise serializers.ValidationError(message,code ='authentication')
+            message = _('unable to authenticate the user')
+            raise serializers.ValidationError(message,code ='authorization')
 
         attributes['user'] =user
         return attributes
