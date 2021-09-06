@@ -3,6 +3,11 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from core.models import Tag, Ingredient, Recipe
 from recipe import serializers
+from django.shortcuts import render
+from django.http import HttpResponse
+from django.views import View
+
+
 
 class Tagview(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.CreateModelMixin):
     """manage tags in the database"""
@@ -56,5 +61,17 @@ class RecipeView(viewsets.ModelViewSet):
     def perform_create(self,serializer):
         """create a new recipe"""
         serializer.save(user=self.request.user)
+
+class IndexView(View):
+    def get(self,request):
+        queryset = Recipe.objects.all()
+        test='testname'
+        print(queryset)
+        return render(request, 'index2.html',{'names': queryset})
+
+
+
+
+
         
 
