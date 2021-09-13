@@ -16,6 +16,7 @@ services:
    - DB_NAME=app
    - DB_USER=postgres
    - DB_PASS=password
+   - DEBUG=1
   depends_on:
    - db
 
