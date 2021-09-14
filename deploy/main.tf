@@ -13,3 +13,8 @@ provider "aws" {
   region  = "us-east-1"
   version = "~> 2.54.0"
 }
+
+// locals are ways that we can create dynamic variables inside Terraform <-> variables.tf
+locals {
+  prefix = "${var.prefix}-${terraform.workspace}"
+}

@@ -1,0 +1,4 @@
+variable "prefix" {
+  default = "craa"
+}
+
