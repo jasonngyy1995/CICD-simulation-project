@@ -17,4 +17,11 @@ provider "aws" {
 // locals are ways that we can create dynamic variables inside Terraform <-> variables.tf
 locals {
   prefix = "${var.prefix}-${terraform.workspace}"
+  common_tags = {
+    Environment = terraform.workspace
+    Project     = var.project
+    Owner       = var.contact
+    ManagedBy   = "Terraform"
+  }
 }
+

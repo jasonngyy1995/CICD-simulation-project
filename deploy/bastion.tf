@@ -16,10 +16,13 @@ resource "aws_instance" "bastion" {
   ami = data.aws_ami.amazon_linux.id
   # Type -> how much resources will be assigned to that machine
   instance_type = "t2.micro"
-
-  tags = {
-    Name = "${local.prefix}-bastion"
-  }
+  # include base tag and the custom name tag of our resource
+  tags = merge(
+    local.common_tags,
+    tomap({
+      "Name" = "${local.prefix}-bastion"
+    })
+  )
 }
 
 # In Terraform documentation, 'Data Source' is only for getting information
