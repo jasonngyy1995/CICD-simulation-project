@@ -1,0 +1,15 @@
+version: '3.7'
+
+services:
+  terraform:
+    image: hashicorp/terraform:0.12.21
+    # map the volumes of our local terraform directory to the "infra" directory on the runnung server
+    volumes: 
+      - .:/infra
+    working_dir: /infra
+    # pass below variables from local machine to docker service when running the docker file -> aws vault
+    # avoid hard-coded aws credentials
+    environment: 
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_SESSION_TOKEN=${AWS_SESSION_TOKEN}
