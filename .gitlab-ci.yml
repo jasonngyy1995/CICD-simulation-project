@@ -17,35 +17,35 @@ Test and Lint:
   script:
     - echo "Test and Lint"
   rules:
-    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME =~ /^(main|production)$/ || $CI_COMMIT_BRANCH =~ /^(main|production)$/'
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME =~ /^(master|production)$/ || $CI_COMMIT_BRANCH =~ /^(master|production)$/'
 
 Validate Terraform:
   stage: Test and Lint
   script:
     - echo "Validate Terraform"
   rules:
-    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME =~ /^(main|production)$/ || $CI_COMMIT_BRANCH =~ /^(main|production)$/'
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME =~ /^(master|production)$/ || $CI_COMMIT_BRANCH =~ /^(master|production)$/'
 
 Build and Push:
   stage: Build and Push
   script:
     - echo "Build and Push docker image"
   rules:
-    - if: '$CI_COMMIT_BRANCH =~ /^(main|production)$/'
+    - if: '$CI_COMMIT_BRANCH =~ /^(master|production)$/'
 
 Staging Plan:
   stage: Staging Plan
   script:
     - echo "Run Terraform Plan for Staging"
   rules:
-    - if: '$CI_COMMIT_BRANCH =~ /^(main|production)$/'
+    - if: '$CI_COMMIT_BRANCH =~ /^(master|production)$/'
 
 Staging Apply:
   stage: Staging Apply
   script:
     - echo "Run Terraform Apply for Staging"
   rules:
-    - if: '$CI_COMMIT_BRANCH =~ /^(main|production)$/'
+    - if: '$CI_COMMIT_BRANCH =~ /^(master|production)$/'
 
 Production Plan:
   stage: Production Plan
@@ -67,7 +67,7 @@ Staging Destroy:
   script:
     - echo "Run Terraform Destroy for Staging"
   rules:
-    - if: '$CI_COMMIT_BRANCH =~ /^(main|production)$/'
+    - if: '$CI_COMMIT_BRANCH =~ /^(master|production)$/'
       when: manual
 
 Production Destroy:
