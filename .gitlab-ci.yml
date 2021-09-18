@@ -29,14 +29,14 @@ Validate Terraform:
 Build and Push:
   stage: Build and Push
   script:
-    - echo "Build and Push Docker Image"
+    - echo "Build and Push docker image"
   rules:
     - if: '$CI_COMMIT_BRANCH =~ /^(main|production)$/'
 
 Staging Plan:
   stage: Staging Plan
   script:
-    - echo "Run Terraform for Staging"
+    - echo "Run Terraform Plan for Staging"
   rules:
     - if: '$CI_COMMIT_BRANCH =~ /^(main|production)$/'
 
@@ -50,7 +50,7 @@ Staging Apply:
 Production Plan:
   stage: Production Plan
   script:
-    - echo "Run Terraform for Production"
+    - echo "Run Terraform Plan for Production"
   rules:
     - if: '$CI_COMMIT_BRANCH == "production"'
 
@@ -60,6 +60,7 @@ Production Apply:
     - echo "Run Terraform Apply for Production"
   rules:
     - if: '$CI_COMMIT_BRANCH == "production"'
+      when: manual
 
 Staging Destroy:
   stage: Destroy
@@ -69,7 +70,6 @@ Staging Destroy:
     - if: '$CI_COMMIT_BRANCH =~ /^(main|production)$/'
       when: manual
 
-
 Production Destroy:
   stage: Destroy
   script:
@@ -77,4 +77,3 @@ Production Destroy:
   rules:
     - if: '$CI_COMMIT_BRANCH == "production"'
       when: manual
-
