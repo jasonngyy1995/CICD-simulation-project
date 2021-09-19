@@ -74,7 +74,16 @@ Build and Push:
 Staging Plan:
   stage: Staging Plan
   script:
-    - echo "Run Terraform Plan for Staging"
+    - cd deploy/
+    # same as the tag in Build and Push
+    # TF_VAR -> syntax used to pass env var into Terraform
+    - export TF_VAR_ecr_image_api=$ECR_REPO:$CI_COMMIT_SHORT_SHA
+    # Pull down providers that are needed
+    - terraform init
+    # select correct workspace to deploy
+    - terraform workspace select staging || terraform workspace new staging
+    # output the console logs all the changes that will be made to AWS
+    - terraform plan
   rules:
     - if: '$CI_COMMIT_BRANCH =~ /^(main|production)$/'
 
@@ -88,7 +97,11 @@ Staging Apply:
 Production Plan:
   stage: Production Plan
   script:
-    - echo "Run Terraform Plan for Production"
+    - cd deploy/
+    - export TF_VAR_ecr_image_api=$ECR_REPO:$CI_COMMIT_SHORT_SHA
+    - terraform init
+    - terraform workspace select production || terraform workspace new production
+    - terraform plan
   rules:
     - if: '$CI_COMMIT_BRANCH == "production"'
 
