@@ -39,6 +39,10 @@ resource "aws_instance" "bastion" {
   subnet_id = aws_subnet.public_a.id
   key_name  = var.bastion_key_name
 
+  vpc_security_group_ids = [
+    aws_security_group.bastion.id
+  ]
+
   # Type -> how much resources will be assigned to that machine
   instance_type = "t2.micro"
   # include base tag and the custom name tag of our resource
@@ -52,3 +56,45 @@ resource "aws_instance" "bastion" {
 
 # In Terraform documentation, 'Data Source' is only for getting information
 # 'Resource' is for creating resources
+
+resource "aws_security_group" "bastion" {
+  description = "Control inbound and outbound access of bastion"
+  name        = "${local.prefix}-bastion"
+  vpc_id      = aws_vpc.main.id
+
+
+  # Only allows inbound access on port 22
+  ingress {
+    protocol  = "tcp"
+    from_port = 22
+    to_port   = 22
+    # Allow access from any IP address, could set to static IP access for other situdation
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    protocol    = "tcp"
+    from_port   = 443
+    to_port     = 443
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    protocol    = "tcp"
+    from_port   = 80
+    to_port     = 80
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port = 5432
+    to_port   = 5432
+    protocol  = "tcp"
+    cidr_blocks = [
+      aws_subnet.private_a.cidr_block,
+      aws_subnet.private_b.cidr_block,
+    ]
+  }
+
+  tags = local.common_tags
+}
