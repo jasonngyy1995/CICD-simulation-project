@@ -45,9 +45,29 @@ Validate Terraform:
     - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME =~ /^(main|production)$/ || $CI_COMMIT_BRANCH =~ /^(main|production)$/'
 
 Build and Push:
+  image: docker:19.03.5
+  services:
+    # dind - docker in docker: running docker image inside docker container
+    - docker:19.03.5-dind
   stage: Build and Push
   script:
-    - echo "Build and Push docker image"
+    # Add python3 to Docker image
+    - apk add python3
+    # Install aws cli tool
+    - pip3 install awscli
+    # Build Docker image, ECR_REPO as set in GitLab
+    # $CI_COMMIT_SHORT_SHA . -> unique tag associated with the image that is pushed to ECR
+    # Build the Docker image in the root of repo that we are currently in
+    - docker build --compress -t $ECR_REPO:$CI_COMMIT_SHORT_SHA .
+    # Execute Docker login command
+    - $(aws ecr get-login --no-include-email --region ap-southeast-2)
+    # Push the image to ECR registry
+    - docker push $ECR_REPO:$CI_COMMIT_SHORT_SHA
+    # Latest tag always has the latest ver. of app
+    - docker tag $ECR_REPO:$CI_COMMIT_SHORT_SHA $ECR_REPO:latest
+    # Push the latest tag
+    - docker push $ECR_REPO:latest
+
   rules:
     - if: '$CI_COMMIT_BRANCH =~ /^(main|production)$/'
 
