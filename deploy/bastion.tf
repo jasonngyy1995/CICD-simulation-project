@@ -34,6 +34,11 @@ resource "aws_instance" "bastion" {
   ami                  = data.aws_ami.amazon_linux.id
   user_data            = file("./templates/bastion/user-data.sh")
   iam_instance_profile = aws_iam_instance_profile.bastion.name
+
+  # Subnet for AWS instance to launch
+  subnet_id = aws_subnet.public_a.id
+  key_name  = var.bastion_key_name
+
   # Type -> how much resources will be assigned to that machine
   instance_type = "t2.micro"
   # include base tag and the custom name tag of our resource
