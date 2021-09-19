@@ -2,7 +2,8 @@ version: '3.7'
 
 services:
   terraform:
-    image: hashicorp/terraform:0.12.21
+    # update terraform due to outdated GPG key
+    image: hashicorp/terraform:0.12.31
     # map the volumes of our local terraform directory to the "infra" directory on the runnung server
     volumes: 
       - .:/infra
