@@ -25,3 +25,5 @@ locals {
   }
 }
 
+// declare aws region
+data "aws_region" "current" {}
