@@ -20,9 +20,9 @@ class Tagview(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.CreateModel
         """return objects for the current user"""
         return self.queryset.filter(user=self.request.user).order_by('-name')
 
-    def perform_create(self,serializer):
+    def perform_create(self,serizalizer):
         """Create a new tag"""
-        serializer.save(user=self.request.user)
+        serizalizer.save(user=self.request.user)
  
 
 class IngredientView(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.CreateModelMixin):
@@ -36,9 +36,9 @@ class IngredientView(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.Crea
         """return objects for the current user"""
         return self.queryset.filter(user=self.request.user).order_by('-name')
 
-    def perform_create(self,serializer):
+    def perform_create(self,serizalizer):
         """Create a new ingredient"""
-        serializer.save(user=self.request.user)
+        serizalizer.save(user=self.request.user)
 
 class RecipeView(viewsets.ModelViewSet):
     """manage recipe in the database"""
@@ -58,7 +58,7 @@ class RecipeView(viewsets.ModelViewSet):
         
         return self.serializer_class
 
-    def perform_create(self,serializer):
+    def perform_create(self,serializerS):
         """create a new recipe"""
         serializer.save(user=self.request.user)
 

@@ -21,7 +21,6 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', view.home, name="home"),
     path('api/user/',include('user.urls')),
     path('api/recipe/',include('recipe.urls')),
 ]
