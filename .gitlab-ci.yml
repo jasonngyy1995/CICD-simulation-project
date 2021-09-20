@@ -61,7 +61,7 @@ Build and Push:
     # Build the Docker image in the root of repo that we are currently in
     - docker build --compress -t $ECR_REPO:$CI_COMMIT_SHORT_SHA .
     # Execute Docker login command
-    - $(aws ecr get-login --no-include-email --region ap-southeast-2)
+    - $(aws ecr get-login --no-include-email --region us-east-1)
     # Push the image to ECR registry
     - docker push $ECR_REPO:$CI_COMMIT_SHORT_SHA
     # Latest tag always has the latest ver. of app
