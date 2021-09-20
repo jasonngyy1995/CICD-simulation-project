@@ -6,7 +6,9 @@ resource "aws_lb" "api" {
     aws_subnet.public_a.id,
     aws_subnet.public_b.id
   ]
+
   security_groups = [aws_security_group.lb.id]
+
   tags            = local.common_tags
 }
 
@@ -17,6 +19,7 @@ resource "aws_lb_target_group" "api" {
   vpc_id      = aws_vpc.main.id
   target_type = "ip"
   port        = 8000
+
   health_check {
     path = "/admin/login/"
   }
@@ -55,5 +58,6 @@ resource "aws_security_group" "lb" {
     to_port     = 8000
     cidr_blocks = ["0.0.0.0/0"]
   }
+  
   tags = local.common_tags
 }

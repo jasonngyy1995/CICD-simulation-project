@@ -21,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'changeme')
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'cont7djangosecretkey')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(int(os.environ.get('DEBUG', 0)))
@@ -33,6 +33,7 @@ ALLOWED_HOSTS.extend(
         os.environ.get('ALLOWED_HOSTS', '').split(',')
     )
 )
+
 if os.environ.get('AWS_EXECUTION_ENV'):
     ALLOWED_HOSTS.append(gethostbyname(gethostname()))
 
