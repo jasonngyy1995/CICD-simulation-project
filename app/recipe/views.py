@@ -67,7 +67,7 @@ class IndexView(View):
         queryset = Recipe.objects.all()
         test='testname'
         print(queryset)
-        return render(request, 'index1.html',{'names': queryset})
+        return render(request, 'index.html',{'names': queryset})
 
 
 
