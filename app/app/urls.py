@@ -22,11 +22,11 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/user/',include('user.urls')),
-    path('api/recipe/',include('recipe.urls')),  
+    # path('api/recipe/',include('recipe.urls')),  
 ] 
 
 urlpatterns += [
-    path('home/', include('home.urls')),
+    # path('home/', include('home.urls')),
     path('recipe/', include('recipe.urls')),
 ]
 
@@ -38,5 +38,5 @@ urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 from django.views.generic import RedirectView
 urlpatterns += [
-    path('', RedirectView.as_view(url='/home/', permanent=True))
+    # path('', RedirectView.as_view(url='/home/', permanent=True))
 ]
