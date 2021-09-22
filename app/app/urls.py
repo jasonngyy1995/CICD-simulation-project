@@ -27,7 +27,7 @@ urlpatterns = [
 
 urlpatterns += [
     # path('home/', include('home.urls')),
-    path('recipe/', include('recipe.urls')),
+    path('api/recipe/', include('recipe.urls')),
 ]
 
 from django.conf import settings
