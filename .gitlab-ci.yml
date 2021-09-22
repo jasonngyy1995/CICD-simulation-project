@@ -80,8 +80,8 @@ Staging Plan:
     # TF_VAR -> syntax used to pass env var into Terraform
     - export TF_VAR_ecr_image_api=$ECR_REPO:$CI_COMMIT_SHORT_SHA
     # Pull down providers that are needed
-    - terraform force-unlock -force 882663dc-e948-2ece-5b32-b983cda742b4
     - terraform init
+    - terraform force-unlock -force 882663dc-e948-2ece-5b32-b983cda742b4
     # select correct workspace to deploy
     - terraform workspace select staging || terraform workspace new staging
     # output the console logs all the changes that will be made to AWS
