@@ -1,5 +1,5 @@
 variable "prefix" {
-  default = "craa"
+  default = "apicicd"
 }
 
 variable "project" {
