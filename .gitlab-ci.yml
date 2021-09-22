@@ -6,6 +6,7 @@ image:
     - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
 
 stages:
+  - Destroy
   # Run unit tests and linting on code.
   - Test and Lint
   # Build Docker image and push to ECR
@@ -17,7 +18,7 @@ stages:
   - Production Plan
   - Production Apply
   # Manual jobs to destroy environment
-  - Destroy
+ 
 
 Test and Lint:
   image: docker:19.03.5
