@@ -9,6 +9,6 @@ router.register('ingredients',views.IngredientView)
 router.register('recipes',views.RecipeView)
 app_name = 'recipe'
 urlpatterns = [
-    path('',IndexView.as_view()),
-    path('api/', include(router.urls))
+    path('', include(router.urls)),
+    path('test', IndexView.as_view()),
 ]
