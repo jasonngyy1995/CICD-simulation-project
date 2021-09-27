@@ -24,12 +24,11 @@ Test and Lint:
   image: docker:19.03.5
   services:
     # dind - docker in docker: running docker image inside docker container
-    - name: docker:19.03.5-dind
-      command: ["--mtu=1450"]
+    - docker:19.03.5-dind
   stage: Test and Lint
   script:
     # dependencies
-    - apk add --update --no-cache docker-compose
+    - apk add --update docker-compose
     # sh -> shell command
     - docker-compose run --rm app sh -c "python manage.py wait_for_db && python manage.py test && flake8"
   rules:
@@ -51,8 +50,7 @@ Build and Push:
   image: docker:19.03.5
   services:
     # dind - docker in docker: running docker image inside docker container
-    - name: docker:19.03.5-dind
-      command: ["--mtu=1450"]
+    - docker:19.03.5-dind
   stage: Build and Push
   script:
     # Add python3 to Docker image
