@@ -1,5 +1,5 @@
 variable "prefix" {
-  default = "apicicd"
+  default = "apideploy"
 }
 
 variable "project" {
