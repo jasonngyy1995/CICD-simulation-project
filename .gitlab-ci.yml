@@ -24,7 +24,8 @@ Test and Lint:
   image: docker:19.03.5
   services:
     # dind - docker in docker: running docker image inside docker container
-    - docker:19.03.5-dind
+    - name: docker:19.03.5-dind
+      command: ["--mtu=1450"]
   stage: Test and Lint
   script:
     # dependencies
@@ -50,7 +51,8 @@ Build and Push:
   image: docker:19.03.5
   services:
     # dind - docker in docker: running docker image inside docker container
-    - docker:19.03.5-dind
+    - name: docker:19.03.5-dind
+      command: ["--mtu=1450"]
   stage: Build and Push
   script:
     # Add python3 to Docker image
