@@ -84,7 +84,7 @@ TEMPLATES = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "https://cont7.link",
+    "https://www.cont7.link",
     "http://localhost:4200",
 ]
 
