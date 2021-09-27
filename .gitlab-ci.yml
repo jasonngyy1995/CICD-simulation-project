@@ -29,7 +29,7 @@ Test and Lint:
   stage: Test and Lint
   script:
     # dependencies
-    - apk add --update --no-cache docker-compose
+    - apk add --update docker-compose
     # sh -> shell command
     - docker-compose run --rm app sh -c "python manage.py wait_for_db && python manage.py test && flake8"
   rules:
