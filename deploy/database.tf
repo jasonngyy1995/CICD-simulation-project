@@ -44,7 +44,7 @@ resource "aws_db_instance" "main" {
   # Entry level storage type in AWS
   storage_type   = "gp2"
   engine         = "postgres"
-  engine_version = "11.4"
+  engine_version = "11.2"
 
   # Type of database server
   instance_class       = "db.t2.micro"
