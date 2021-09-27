@@ -135,20 +135,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/static/'
-STATIC_ROOT = '/vol/web/static'
+MEDIA_URL = '/static/media'
 
-MEDIA_ROOT = '/vol/web/media'
 STATIC_ROOT = '/vol/web/static'
+MEDIA_ROOT = '/vol/web/media'
 
 AUTH_USER_MODEL = 'core.User'
-
-# Toggle S3 backend off/on
-S3_STORAGE_BACKEND = bool(int(os.environ.get('S3_STORAGE_BACKEND', 1)))
-if S3_STORAGE_BACKEND is True:
-    # Configure default torage backend
-    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
-AWS_DEFAULT_ACL = 'public-read'
-AWS_STORAGE_BUCKET_NAME = os.environ.get('S3_STORAGE_BUCKET_NAME')
-AWS_S3_REGION_NAME = os.environ.get('S3_STORAGE_BUCKET_REGION', 'us-east-1')
-AWS_QUERYSTRING_AUTH = False
